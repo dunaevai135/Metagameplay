@@ -3,12 +3,13 @@ import os
 import sqlite3
 from dbcontroller import DBController
 
+
 class DBControllerTest(unittest.TestCase):
     _test_db_name = 'users_test.db'
 
     def setUp(self):
         self.db = DBController(self._test_db_name)
-        
+
         # TODO may not have id = 1
         self.db.create_user('testuser', 100)
         self.db.create_item(1, 'testitem', 10.0)

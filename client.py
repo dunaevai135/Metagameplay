@@ -6,6 +6,7 @@ import grpc
 import metagameplay_pb2
 import metagameplay_pb2_grpc
 
+
 def login(stub):
     while True:
         name = input('Login\nNickname: ').strip()
@@ -14,29 +15,37 @@ def login(stub):
             print('Login success')
             return response.user.session
         else:
-            print('Login error. '+response.status.error)
+            print('Login error. ' + response.status.error)
+
 
 def logout(stub, session_id):
     stub.Logout(metagameplay_pb2.User(session=session_id))
 
+
 def buy_item(stub, session_id):
     name = input('item name: ').strip()
-    response = stub.BuyItem(metagameplay_pb2.BuyRequest(session=session_id, item_name=name))
-    print('Success' if response.ok else 'Error: '+response.error)
+    response = stub.BuyItem(
+        metagameplay_pb2.BuyRequest(session=session_id, item_name=name))
+    print('Success' if response.ok else 'Error: ' + response.error)
+
 
 def sell_item(stub, session_id):
     name = input('item name: ').strip()
-    response = stub.SellItem(metagameplay_pb2.BuyRequest(session=session_id, item_name=name))
-    print('Success' if response.ok else 'Error: '+response.error)
+    response = stub.SellItem(
+        metagameplay_pb2.BuyRequest(session=session_id, item_name=name))
+    print('Success' if response.ok else 'Error: ' + response.error)
+
 
 def get_all_items(stub, session_id):
     response = stub.GetAllItems(metagameplay_pb2.User(session=session_id))
     print(response)
 
+
 def get_user(stub, session_id):
     response = stub.GetUser(metagameplay_pb2.User(session=session_id))
     print(response)
-    
+
+
 def run():
     logged = False
     session_id = ''
@@ -68,7 +77,7 @@ def run():
 
             else:
                 print("Invalid command. Please try again.")
-        
+
         print('Goodbye')
         logout(stub, session_id)
 
